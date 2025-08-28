@@ -27,7 +27,7 @@ const getCheckupsByUserId = async (req: Request, res: Response) => {
 
 const addCheckup = async (req: Request, res: Response) => {
   const { userId, date, notes, pain, lumpDetected, asymmetry, temperature } = req.body;
-  if (!userId || !date || !notes || !pain || !lumpDetected || !asymmetry || !temperature) {
+  if (!userId || !date || pain === undefined || lumpDetected === undefined || asymmetry === undefined || temperature === undefined) {
     return res.status(400).json({ error: "All fields are required" });
   }
   try {
