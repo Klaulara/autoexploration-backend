@@ -8,8 +8,6 @@ dotenv.config();
 
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log("Logging in user:", email);
-  console.log("User password:", password);
 
   try {
     const user = await prisma.user.findUnique({ where: { email } });
@@ -30,7 +28,7 @@ const login = async (req: Request, res: Response) => {
       expiresIn: "1d",
     });
 
-    return res.json({ token });
+    return res.json({ token, user: { id: user.id, name: user.name, email: user.email } });
   } catch (error) {
     console.error("Error logging in:", error);
     return res.status(500).json({ message: "Internal server error" });
